@@ -43,7 +43,7 @@ System.register(['angular2/core', './room', 'rxjs/Observable', 'rxjs/add/operato
                 };
                 RoomService.prototype.loadRooms = function () {
                     var _this = this;
-                    this.http.get('http://localhost:3000/api/rooms')
+                    this.http.get('http://10.0.0.1:3000/api/rooms')
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) {
                         console.log(data);
@@ -58,7 +58,7 @@ System.register(['angular2/core', './room', 'rxjs/Observable', 'rxjs/add/operato
                     var headers = new http_1.Headers();
                     headers.append('Content-Type', 'application/json');
                     console.log("Roomservice => saveRoom");
-                    this.http.post('http://localhost:3000/api/rooms', JSON.stringify({ 'name': roomname }), { headers: headers })
+                    this.http.post('http://10.0.0.1:3000/api/rooms', JSON.stringify({ 'name': roomname }), { headers: headers })
                         .map(function (res) { return res.json(); })
                         .subscribe(function (data) { return console.log(data); }, function (err) { return console.log(err); });
                     ;

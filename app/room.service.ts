@@ -28,7 +28,7 @@ export class RoomService  {
       }
 
       loadRooms(){
-        this.http.get('http://localhost:3000/api/rooms')
+        this.http.get('http://10.0.0.1:3000/api/rooms')
               .map(res => res.json())
               .subscribe(
                   data => {
@@ -49,7 +49,7 @@ export class RoomService  {
         headers.append('Content-Type', 'application/json');
 
         console.log("Roomservice => saveRoom");
-        this.http.post('http://localhost:3000/api/rooms',JSON.stringify({'name':roomname}),{headers:headers})
+        this.http.post('http://10.0.0.1:3000/api/rooms',JSON.stringify({'name':roomname}),{headers:headers})
         .map(res => res.json())
         .subscribe(
           data => console.log(data),

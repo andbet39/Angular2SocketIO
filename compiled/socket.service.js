@@ -43,7 +43,7 @@ System.register(['angular2/core', './message', './room', './room.service', 'rxjs
                         return _this._messagesObserver = observer;
                     }).share();
                     this._dataStore = { messages: [], image: "" };
-                    this.socket = io('http://localhost:3000');
+                    this.socket = io('http://10.0.0.1:3000');
                     this.socket.on('message', this.onMessage.bind(this));
                     this.socket.on('room_created', this.onCreateRoom.bind(this));
                 }
