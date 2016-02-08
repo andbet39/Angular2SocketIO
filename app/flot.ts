@@ -40,7 +40,7 @@ export class FlotCmp  implements AfterViewInit{
  
              this.myplot.setData(this.dataset);
              
-             this.myplot.setupGrid();
+            // this.myplot.setupGrid();
                 this.myplot.draw();
          }
        // this.plot.draw();

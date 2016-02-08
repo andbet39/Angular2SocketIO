@@ -30,19 +30,32 @@ export class SensorViewComponent implements OnInit{
         };
         
         
-        this.dataset = [{label: "line1",
-                      color:"blue",
-                      data:  [[1, 0], [2, 50], [3, 0], [4, 0], [5, 50], [6, 50], [7, 50], [8, 50], [9, 50], [10, 0]]}];
-
+       this.loadRandomData();
      }
 
+    loadRandomData(){
+        var newData = [];
+         newData.push([0,0]);
+            for(var i=1;i<99;i++){
+                newData.push([i,25]);
+              
+            }
+             newData.push([100,50]);
+            
+            this.dataset = [{label: "line1",
+                        color:"red",
+                        data:  newData}];
+    }
+    
+  
   ngOnInit(){
       this._sensorService.sensorDatas$.subscribe(
         data=>{
+          let points = 100;
           
-          if(data.length >11){
+          if(data.length >points){
               this.sensorData=[];
-              for(var i=data.length-1; i > data.length-11 ;i --){
+              for(var i=data.length-1; i > data.length-points ;i --){
                   this.sensorData.push(data[i]);
               }
           }else{
@@ -50,11 +63,10 @@ export class SensorViewComponent implements OnInit{
           }
           
  
-          
-          
+                   
           var newData = [];
           this.sensorData.forEach(function(d,i){
-              newData.push([i,d.val]);
+              newData.push([points-i,d.val]);
           });
           
 

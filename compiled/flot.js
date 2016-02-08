@@ -36,7 +36,7 @@ System.register(['angular2/core'], function(exports_1) {
                 FlotCmp.prototype.ngOnChanges = function (changes) {
                     if (FlotCmp.chosenInitialized) {
                         this.myplot.setData(this.dataset);
-                        this.myplot.setupGrid();
+                        // this.myplot.setupGrid();
                         this.myplot.draw();
                     }
                     // this.plot.draw();

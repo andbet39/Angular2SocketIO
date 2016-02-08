@@ -39,16 +39,26 @@ System.register(['angular2/core', './sensor.service', './flot', 'angular2/common
                             }
                         }
                     };
-                    this.dataset = [{ label: "line1",
-                            color: "blue",
-                            data: [[1, 0], [2, 50], [3, 0], [4, 0], [5, 50], [6, 50], [7, 50], [8, 50], [9, 50], [10, 0]] }];
+                    this.loadRandomData();
                 }
+                SensorViewComponent.prototype.loadRandomData = function () {
+                    var newData = [];
+                    newData.push([0, 0]);
+                    for (var i = 1; i < 99; i++) {
+                        newData.push([i, 25]);
+                    }
+                    newData.push([100, 50]);
+                    this.dataset = [{ label: "line1",
+                            color: "red",
+                            data: newData }];
+                };
                 SensorViewComponent.prototype.ngOnInit = function () {
                     var _this = this;
                     this._sensorService.sensorDatas$.subscribe(function (data) {
-                        if (data.length > 11) {
+                        var points = 100;
+                        if (data.length > points) {
                             _this.sensorData = [];
-                            for (var i = data.length - 1; i > data.length - 11; i--) {
+                            for (var i = data.length - 1; i > data.length - points; i--) {
                                 _this.sensorData.push(data[i]);
                             }
                         }
@@ -57,7 +67,7 @@ System.register(['angular2/core', './sensor.service', './flot', 'angular2/common
                         }
                         var newData = [];
                         _this.sensorData.forEach(function (d, i) {
-                            newData.push([i, d.val]);
+                            newData.push([points - i, d.val]);
                         });
                         _this.dataset = [{ label: "line1",
                                 color: "red",
