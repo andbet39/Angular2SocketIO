@@ -1,0 +1,10 @@
+
+<h2>Sensor View</h2>
+    <ul>
+        <li *ngFor ="#data of sensorData">
+            {{data.val}}
+        </li>
+    </ul>
+  <div>
+      <flot  [options]="splineOptions" [dataset]="dataset" height="250px" width="50%"></flot>
+  </div>

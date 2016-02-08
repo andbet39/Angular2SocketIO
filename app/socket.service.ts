@@ -37,7 +37,7 @@ export class SocketService  {
 
           this._dataStore = { messages: [],image: "" };
 
-          this.socket = io('http://10.0.0.1:3000');
+          this.socket = io('http://10.29.79.185:3000');
           this.socket.on('message',this.onMessage.bind(this));
           this.socket.on('room_created',this.onCreateRoom.bind(this));
 
