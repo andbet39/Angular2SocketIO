@@ -1,4 +1,5 @@
 System.register(['angular2/core', 'rxjs/Observable', 'rxjs/add/operator/share', './models/sensorData'], function(exports_1) {
+    "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -31,12 +32,19 @@ System.register(['angular2/core', 'rxjs/Observable', 'rxjs/add/operator/share', 
                     this.sensorDatas$ = new Observable_1.Observable(function (observer) {
                         return _this._sensorDataObserver = observer;
                     }).share();
-                    this._dataStore = { sensorDatas: [] };
-                    this.socket = io('http://10.29.79.185:3000');
+                    this.latestData$ = new Observable_1.Observable(function (observer) {
+                        return _this._latestDataObserver = observer;
+                    }).share();
+                    this._dataStore = { sensorDatas: [], latestData: null };
+                    this.socket = io('http://10.0.0.1:3000');
                     this.socket.on('senordata_created', this.onSensorData.bind(this));
                 }
                 SensorService.prototype.onSensorData = function (data) {
                     this._dataStore.sensorDatas.push(new sensorData_1.SensorData(data.sens_id, data.val, data.type, data.received));
+                    this._dataStore.latestData = new sensorData_1.SensorData(data.sens_id, data.val, data.type, data.received);
+                    if (this._latestDataObserver) {
+                        this._latestDataObserver.next(this._dataStore.latestData);
+                    }
                     this._sensorDataObserver.next(this._dataStore.sensorDatas);
                 };
                 SensorService = __decorate([
@@ -44,7 +52,7 @@ System.register(['angular2/core', 'rxjs/Observable', 'rxjs/add/operator/share', 
                     __metadata('design:paramtypes', [])
                 ], SensorService);
                 return SensorService;
-            })();
+            }());
             exports_1("SensorService", SensorService);
         }
     }

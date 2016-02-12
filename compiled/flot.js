@@ -1,4 +1,5 @@
 System.register(['angular2/core'], function(exports_1) {
+    "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -19,8 +20,6 @@ System.register(['angular2/core'], function(exports_1) {
             FlotCmp = (function () {
                 function FlotCmp(el) {
                     this.el = el;
-                    this.width = '100%';
-                    this.height = 220;
                 }
                 FlotCmp.prototype.ngAfterViewInit = function () {
                     if (!FlotCmp.chosenInitialized) {
@@ -66,7 +65,7 @@ System.register(['angular2/core'], function(exports_1) {
                     __metadata('design:paramtypes', [core_1.ElementRef])
                 ], FlotCmp);
                 return FlotCmp;
-            })();
+            }());
             exports_1("FlotCmp", FlotCmp);
         }
     }

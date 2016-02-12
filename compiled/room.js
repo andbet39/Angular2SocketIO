@@ -1,4 +1,5 @@
 System.register([], function(exports_1) {
+    "use strict";
     var Room;
     return {
         setters:[],
@@ -9,7 +10,7 @@ System.register([], function(exports_1) {
                     this.name = name;
                 }
                 return Room;
-            })();
+            }());
             exports_1("Room", Room);
         }
     }

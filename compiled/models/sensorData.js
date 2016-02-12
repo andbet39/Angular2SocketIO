@@ -1,4 +1,5 @@
 System.register([], function(exports_1) {
+    "use strict";
     var SensorData;
     return {
         setters:[],
@@ -11,7 +12,7 @@ System.register([], function(exports_1) {
                     this.received = received;
                 }
                 return SensorData;
-            })();
+            }());
             exports_1("SensorData", SensorData);
         }
     }

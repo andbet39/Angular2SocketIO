@@ -1,4 +1,5 @@
 System.register([], function(exports_1) {
+    "use strict";
     var Message;
     return {
         setters:[],
@@ -8,7 +9,7 @@ System.register([], function(exports_1) {
                     this.content = content;
                 }
                 return Message;
-            })();
+            }());
             exports_1("Message", Message);
         }
     }

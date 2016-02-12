@@ -8,13 +8,16 @@ import {SensorData} from './models/sensorData';
 @Injectable()
 export class SensorService  {
   sensorDatas$: Observable<Array<SensorData>>;
+  latestData$ :Observable<SensorData>;
 
       private _sensorDataObserver: any;
+      private _latestDataObserver: any;
+      
       private socket:any;
 
       private _dataStore: {
           sensorDatas: Array<SensorData>,
-
+          latestData:SensorData;
       };
 
       constructor() {
@@ -22,17 +25,23 @@ export class SensorService  {
     
          this.sensorDatas$ = new Observable(observer =>
               this._sensorDataObserver = observer).share();
+         
+         this.latestData$ = new Observable(observer =>
+                this._latestDataObserver = observer).share();
 
-          this._dataStore = { sensorDatas: []};
+          this._dataStore = { sensorDatas: [],latestData: null};
 
-          this.socket = io('http://10.29.79.185:3000');
+          this.socket= io('http://10.0.0.1:3000');
           this.socket.on('senordata_created',this.onSensorData.bind(this));
-
+          
       }
-
     
       onSensorData(data){
         this._dataStore.sensorDatas.push(new SensorData(data.sens_id,data.val,data.type,data.received));
+        this._dataStore.latestData = new SensorData(data.sens_id,data.val,data.type,data.received);
+        if(this._latestDataObserver){
+            this._latestDataObserver.next(this._dataStore.latestData);
+        }
         this._sensorDataObserver.next(this._dataStore.sensorDatas);
       }
 

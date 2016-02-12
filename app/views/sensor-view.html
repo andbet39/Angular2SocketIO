@@ -1,0 +1,23 @@
+
+        <h3 class="heading_b uk-margin-bottom">Blank Page</h3>
+
+        <div class="md-card">
+            <div class="md-card-content">
+                <h2>Sensor View</h2>
+                    <div>
+
+                    </div>
+                <div>
+                    <flot  [options]="splineOptions" [dataset]="dataset" height="250px" width="50%"></flot>
+                    <flotrt  [options]="splineOptions" [newdata]="newdata" min="0" max="30" height="250px" width="50%"></flotrt>
+                </div>
+                NewData  : {{newdata}}
+                <!--  <ul>
+                        <li *ngFor ="#data of sensorData">
+                            {{data.val}}
+                        </li>
+                    </ul>
+                -->
+                
+            </div>
+           </div>

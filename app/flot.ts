@@ -7,8 +7,8 @@ import {Component, ElementRef, Input, AfterViewInit,OnChanges} from 'angular2/co
 
 export class FlotCmp  implements AfterViewInit{
 
-  private width = '100%';
-  private height = 220;
+ // private width = '100%';
+ // private height = 220;
   public myplot:any;
   static chosenInitialized = false;
   
@@ -35,6 +35,8 @@ export class FlotCmp  implements AfterViewInit{
   } 
   
  ngOnChanges(changes) {
+     
+      
       
          if(FlotCmp.chosenInitialized){
  
