@@ -1,5 +1,4 @@
 System.register(['angular2/core'], function(exports_1) {
-    "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -21,26 +20,54 @@ System.register(['angular2/core'], function(exports_1) {
                 function TopBarComponent() {
                 }
                 TopBarComponent.prototype.ngAfterViewInit = function () {
-                    $('#main_search_btn').on('click', function (e) {
-                        e.preventDefault();
-                        altair_main_header.search_show();
-                    });
-                    // hide main search
-                    $(document).on('click keydown', function (e) {
-                        if ($body.hasClass('main_search_active')) {
-                            if ((!$(e.target).closest('.header_main_search_form').length && !$(e.target).closest('#main_search_btn').length)
-                                || (e.which == 27)) {
+                    // page onload functions
+                    altair_page_onload.init();
+                    // main header
+                    altair_main_header.init();
+                    // main sidebar
+                    altair_main_sidebar.init();
+                    // secondary sidebar
+                    altair_secondary_sidebar.init();
+                    // top bar
+                    altair_top_bar.init();
+                    // page heading
+                    altair_page_heading.init();
+                    // material design
+                    altair_md.init();
+                    // forms
+                    altair_forms.init();
+                    // truncate text helper
+                    altair_helpers.truncate_text($('.truncate-text'));
+                    // full screen
+                    altair_helpers.full_screen();
+                    /*
+                            $('#main_search_btn').on('click', function(e) {
+                                e.preventDefault();
+                                altair_main_header.search_show();
+                            });
+                            // hide main search
+                            
+                            $(document).on('click keydown', function(e) {
+                                if ($body.hasClass('main_search_active')) {
+                                    if (
+                                        (!$(e.target).closest('.header_main_search_form').length && !$(e.target).closest('#main_search_btn').length)
+                                        || (e.which == 27)
+                                    ) {
+                                        altair_main_header.search_hide();
+                                    }
+                                }
+                            });
+                    
+                            $('.header_main_search_close').on('click', function() {
                                 altair_main_header.search_hide();
-                            }
-                        }
-                    });
-                    $('.header_main_search_close').on('click', function () {
-                        altair_main_header.search_hide();
-                    });
-                    $('#full_screen_toggle').on('click', function (e) {
-                        e.preventDefault();
-                        screenfull.toggle();
-                    });
+                            });
+                    
+                           $('#full_screen_toggle').on('click', function(e) {
+                                e.preventDefault();
+                                screenfull.toggle();
+                            })
+                    
+                            */
                 };
                 TopBarComponent = __decorate([
                     core_1.Component({
@@ -50,7 +77,7 @@ System.register(['angular2/core'], function(exports_1) {
                     __metadata('design:paramtypes', [])
                 ], TopBarComponent);
                 return TopBarComponent;
-            }());
+            })();
             exports_1("TopBarComponent", TopBarComponent);
         }
     }

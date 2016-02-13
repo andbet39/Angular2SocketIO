@@ -1,5 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './sensor.component', './simple.component', './topbar.component', './mysidebar.component'], function(exports_1) {
-    "use strict";
+System.register(['angular2/core', 'angular2/router', './sensor.component', './simple.component', './topbar.component', './mysidebar.component', './newsensor.component', './sensorlist.component'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', './sensor.component', './si
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, sensor_component_1, simple_component_1, topbar_component_1, mysidebar_component_1;
+    var core_1, router_1, sensor_component_1, simple_component_1, topbar_component_1, mysidebar_component_1, newsensor_component_1, sensorlist_component_1;
     var AppComponent;
     return {
         setters:[
@@ -30,6 +29,12 @@ System.register(['angular2/core', 'angular2/router', './sensor.component', './si
             },
             function (mysidebar_component_1_1) {
                 mysidebar_component_1 = mysidebar_component_1_1;
+            },
+            function (newsensor_component_1_1) {
+                newsensor_component_1 = newsensor_component_1_1;
+            },
+            function (sensorlist_component_1_1) {
+                sensorlist_component_1 = sensorlist_component_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -43,12 +48,14 @@ System.register(['angular2/core', 'angular2/router', './sensor.component', './si
                     }),
                     router_1.RouteConfig([
                         { path: '/sensor', name: 'SensorView', component: sensor_component_1.SensorViewComponent },
+                        { path: '/listsensor', name: 'ListSensor', component: sensorlist_component_1.SensorListComponent },
+                        { path: '/newsensor', name: 'NewSensor', component: newsensor_component_1.NewSensorComponent },
                         { path: '/', name: 'Simple', component: simple_component_1.SimpleComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
-            }());
+            })();
             exports_1("AppComponent", AppComponent);
         }
     }

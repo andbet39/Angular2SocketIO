@@ -5,6 +5,9 @@ import {RoomService} from './room.service';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/share';
 import { Inject } from 'angular2/core';
+import {Sensor} from './models/Sensor';
+
+
 
 @Injectable()
 export class SocketService  {
@@ -56,6 +59,11 @@ export class SocketService  {
       subscribe(room:Room){
         this.currentRoom=room;
         this.socket.emit('subscribe',this.currentRoom.name);
+      }
+
+
+      subscribe(sensor:Sensor){
+          this.socket.emit('subscribe',sensor.sens_id);
       }
 
 

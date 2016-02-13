@@ -1,5 +1,4 @@
 System.register(['angular2/core', 'angular2/router'], function(exports_1) {
-    "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -24,6 +23,26 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
                 function MySideBarComponent() {
                 }
                 MySideBarComponent.prototype.ngAfterViewInit = function () {
+                    // page onload functions
+                    altair_page_onload.init();
+                    // main header
+                    altair_main_header.init();
+                    // main sidebar
+                    altair_main_sidebar.init();
+                    // secondary sidebar
+                    altair_secondary_sidebar.init();
+                    // top bar
+                    altair_top_bar.init();
+                    // page heading
+                    altair_page_heading.init();
+                    // material design
+                    altair_md.init();
+                    // forms
+                    altair_forms.init();
+                    // truncate text helper
+                    altair_helpers.truncate_text($('.truncate-text'));
+                    // full screen
+                    altair_helpers.full_screen();
                     var $body = $('body'), $document = $(document), $window = $(window), $page_content = $('#page_content'), $page_content_inner = $('#page_content_inner'), $sidebar_main = $('#sidebar_main'), $sidebar_main_toggle = $('#sidebar_main_toggle');
                     if (!$body.hasClass('sidebar_mini') && localStorage.getItem("altair_sidebar_mini") === null) {
                         $sidebar_main_toggle.on('click', function (e) {
@@ -158,7 +177,7 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
                     __metadata('design:paramtypes', [])
                 ], MySideBarComponent);
                 return MySideBarComponent;
-            }());
+            })();
             exports_1("MySideBarComponent", MySideBarComponent);
         }
     }

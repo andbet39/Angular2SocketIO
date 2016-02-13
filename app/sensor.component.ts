@@ -1,6 +1,6 @@
 import {Component} from 'angular2/core';
 import {Component} from 'angular2/core';
-import {SensorService} from './sensor.service';
+import {SensorDataService} from './sensordata.service';
 import {SensorData} from './models/sensorData';
 import {FlotCmp} from './flot';
 import {FlotRTCmp} from './flotRT';
@@ -24,7 +24,7 @@ export class SensorViewComponent implements OnInit{
   public newdata:any=[];
   public selected_sensor_id:number=121;
   
-   constructor(private _sensorService:SensorService){
+   constructor(private _sensorDataService:SensorDataService){
         
         this.splineOptions = {
             series: {
@@ -57,7 +57,7 @@ export class SensorViewComponent implements OnInit{
   
   ngOnInit(){
      
-     this._sensorService.latestData$.subscribe(
+     this._sensorDataService.latestData$.subscribe(
          data=>
          {
              this.newdata=data.val;
@@ -66,7 +66,7 @@ export class SensorViewComponent implements OnInit{
      );
      
      
-      this._sensorService.sensorDatas$.subscribe(
+      this._sensorDataService.sensorDatas$.subscribe(
         data=>{
                   
                 let points = this.points;

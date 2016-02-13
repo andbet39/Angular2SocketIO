@@ -1,0 +1,18 @@
+
+<sensor-form></sensor-form>
+
+<div class="md-card">
+    <div class="md-card-content">
+        <h2>Sensor List</h2>
+        <div>
+
+                <ul>
+                    <li *ngFor ="#sensor of sensors">    <a [routerLink]="['SensorView', {id:sensor.sens_id}]"> {{sensor.sens_id}}</a>
+                        - {{sensor.name}}</li>
+                </ul>
+
+        </div>
+
+
+    </div>
+</div>

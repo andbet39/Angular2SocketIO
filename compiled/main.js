@@ -1,6 +1,5 @@
-System.register(['angular2/platform/browser', './app.component', './sensor.service', 'angular2/http', 'angular2/router'], function(exports_1) {
-    "use strict";
-    var browser_1, app_component_1, sensor_service_1, http_1, router_1;
+System.register(['angular2/platform/browser', './app.component', './sensordata.service', 'angular2/http', 'angular2/router'], function(exports_1) {
+    var browser_1, app_component_1, sensordata_service_1, http_1, router_1;
     return {
         setters:[
             function (browser_1_1) {
@@ -9,8 +8,8 @@ System.register(['angular2/platform/browser', './app.component', './sensor.servi
             function (app_component_1_1) {
                 app_component_1 = app_component_1_1;
             },
-            function (sensor_service_1_1) {
-                sensor_service_1 = sensor_service_1_1;
+            function (sensordata_service_1_1) {
+                sensordata_service_1 = sensordata_service_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
@@ -19,7 +18,7 @@ System.register(['angular2/platform/browser', './app.component', './sensor.servi
                 router_1 = router_1_1;
             }],
         execute: function() {
-            browser_1.bootstrap(app_component_1.AppComponent, [sensor_service_1.SensorService, http_1.HTTP_PROVIDERS, router_1.ROUTER_PROVIDERS]);
+            browser_1.bootstrap(app_component_1.AppComponent, [sensordata_service_1.SensorDataService, http_1.HTTP_PROVIDERS, router_1.ROUTER_PROVIDERS]);
         }
     }
 });

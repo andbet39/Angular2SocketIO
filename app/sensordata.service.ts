@@ -6,7 +6,7 @@ import {SensorData} from './models/sensorData';
 //import { io } from 'socket.io';
 
 @Injectable()
-export class SensorService  {
+export class SensorDataService  {
   sensorDatas$: Observable<Array<SensorData>>;
   latestData$ :Observable<SensorData>;
 

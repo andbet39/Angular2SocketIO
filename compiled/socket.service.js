@@ -1,5 +1,4 @@
 System.register(['angular2/core', './message', './room', './room.service', 'rxjs/Observable', 'rxjs/add/operator/share'], function(exports_1) {
-    "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -61,6 +60,9 @@ System.register(['angular2/core', './message', './room', './room.service', 'rxjs
                     this.currentRoom = room;
                     this.socket.emit('subscribe', this.currentRoom.name);
                 };
+                SocketService.prototype.subscribe = function (sensor) {
+                    this.socket.emit('subscribe', sensor.sens_id);
+                };
                 SocketService.prototype.onMessage = function (message) {
                     console.log("received:" + message.content);
                     this._dataStore.messages.push(new message_1.Message(message.content));
@@ -77,7 +79,7 @@ System.register(['angular2/core', './message', './room', './room.service', 'rxjs
                     __metadata('design:paramtypes', [room_service_1.RoomService])
                 ], SocketService);
                 return SocketService;
-            }());
+            })();
             exports_1("SocketService", SocketService);
         }
     }

@@ -1,5 +1,4 @@
-System.register(['angular2/core', './sensor.service', './flot', './flotRT', 'angular2/common'], function(exports_1) {
-    "use strict";
+System.register(['angular2/core', './sensordata.service', './flot', './flotRT', 'angular2/common'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,15 +8,15 @@ System.register(['angular2/core', './sensor.service', './flot', './flotRT', 'ang
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, sensor_service_1, flot_1, flotRT_1, common_1;
+    var core_1, sensordata_service_1, flot_1, flotRT_1, common_1;
     var SensorViewComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (sensor_service_1_1) {
-                sensor_service_1 = sensor_service_1_1;
+            function (sensordata_service_1_1) {
+                sensordata_service_1 = sensordata_service_1_1;
             },
             function (flot_1_1) {
                 flot_1 = flot_1_1;
@@ -30,8 +29,8 @@ System.register(['angular2/core', './sensor.service', './flot', './flotRT', 'ang
             }],
         execute: function() {
             SensorViewComponent = (function () {
-                function SensorViewComponent(_sensorService) {
-                    this._sensorService = _sensorService;
+                function SensorViewComponent(_sensorDataService) {
+                    this._sensorDataService = _sensorDataService;
                     this.sensorData = [];
                     this.points = 100;
                     this.splineOptions = {};
@@ -62,10 +61,10 @@ System.register(['angular2/core', './sensor.service', './flot', './flotRT', 'ang
                 };
                 SensorViewComponent.prototype.ngOnInit = function () {
                     var _this = this;
-                    this._sensorService.latestData$.subscribe(function (data) {
+                    this._sensorDataService.latestData$.subscribe(function (data) {
                         _this.newdata = data.val;
                     });
-                    this._sensorService.sensorDatas$.subscribe(function (data) {
+                    this._sensorDataService.sensorDatas$.subscribe(function (data) {
                         var points = _this.points;
                         if (data.length > points) {
                             _this.sensorData = [];
@@ -91,10 +90,10 @@ System.register(['angular2/core', './sensor.service', './flot', './flotRT', 'ang
                         templateUrl: 'app/views/sensor-view.html',
                         directives: [common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES, flot_1.FlotCmp, flotRT_1.FlotRTCmp]
                     }), 
-                    __metadata('design:paramtypes', [sensor_service_1.SensorService])
+                    __metadata('design:paramtypes', [sensordata_service_1.SensorDataService])
                 ], SensorViewComponent);
                 return SensorViewComponent;
-            }());
+            })();
             exports_1("SensorViewComponent", SensorViewComponent);
         }
     }
