@@ -21,18 +21,22 @@ System.register(['angular2/core'], function(exports_1) {
                     this.el = el;
                     this.dataset = [];
                     this.points = 100;
-                    this.min = 0;
-                    this.max = 50;
+                    this.generateRandom();
+                    FlotRTCmp.chosenInitialized = false;
+                }
+                FlotRTCmp.prototype.generateRandom = function () {
+                    console.log("generate Random graph");
                     this._graphData = [];
                     this._graphData.push([0, this.min]);
                     for (var i = 1; i < this.points - 1; i++) {
-                        this._graphData.push([i, 25]);
+                        this._graphData.push([i, this.max]);
                     }
                     this._graphData.push([this.points, this.max]);
                     this.dataset = [{ label: "line1",
                             color: "red",
                             data: this._graphData }];
-                }
+                    console.log(this._graphData);
+                };
                 FlotRTCmp.prototype.ngAfterViewInit = function () {
                     if (!FlotRTCmp.chosenInitialized) {
                         var plotArea = $(this.el.nativeElement).find('div').empty();
@@ -56,8 +60,17 @@ System.register(['angular2/core'], function(exports_1) {
                         this.dataset = [{ label: "line1",
                                 color: "red",
                                 data: newData }];
-                        this.myplot.setData(this.dataset);
-                        this.myplot.draw();
+                        if (this.myplot) {
+                            this.myplot.setData(this.dataset);
+                            this.myplot.draw();
+                            this.myplot.setupGrid();
+                        }
+                        if (changes['min'] && changes['max']) {
+                            console.log("minmax changed");
+                            //     this.generateRandom();
+                            this.myplot.draw();
+                            this.myplot.setupGrid();
+                        }
                     }
                 };
                 FlotRTCmp.chosenInitialized = false;

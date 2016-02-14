@@ -38,13 +38,18 @@ System.register(['angular2/core', 'rxjs/Observable', 'rxjs/add/operator/share', 
                     this.socket = io('http://10.0.0.1:3000');
                     this.socket.on('senordata_created', this.onSensorData.bind(this));
                 }
+                SensorDataService.prototype.subscribeSensorData = function (sens_id) {
+                    this.socket.emit('leave', this.currentSensId);
+                    this.currentSensId = sens_id;
+                    this.socket.emit('subscribe', this.currentSensId);
+                };
                 SensorDataService.prototype.onSensorData = function (data) {
                     this._dataStore.sensorDatas.push(new sensorData_1.SensorData(data.sens_id, data.val, data.type, data.received));
                     this._dataStore.latestData = new sensorData_1.SensorData(data.sens_id, data.val, data.type, data.received);
-                    if (this._latestDataObserver) {
+                    if (this._latestDataObserver)
                         this._latestDataObserver.next(this._dataStore.latestData);
-                    }
-                    this._sensorDataObserver.next(this._dataStore.sensorDatas);
+                    if (this._sensorDataObserver)
+                        this._sensorDataObserver.next(this._dataStore.sensorDatas);
                 };
                 SensorDataService = __decorate([
                     core_1.Injectable(), 

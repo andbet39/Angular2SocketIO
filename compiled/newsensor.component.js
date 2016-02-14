@@ -57,7 +57,8 @@ System.register(['angular2/core', './models/Sensor', './services/sensor.service'
                 NewSensorComponent = __decorate([
                     core_1.Component({
                         selector: 'sensor-form',
-                        templateUrl: 'app/views/sensorform.html'
+                        templateUrl: 'app/views/sensorform.html',
+                        providers: [sensor_service_1.SensorService]
                     }), 
                     __metadata('design:paramtypes', [sensor_service_1.SensorService])
                 ], NewSensorComponent);

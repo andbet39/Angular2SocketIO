@@ -15,6 +15,8 @@ export class SensorDataService  {
       
       private socket:any;
 
+      private currentSensId:number;
+
       private _dataStore: {
           sensorDatas: Array<SensorData>,
           latestData:SensorData;
@@ -35,13 +37,20 @@ export class SensorDataService  {
           this.socket.on('senordata_created',this.onSensorData.bind(this));
           
       }
+
+      subscribeSensorData(sens_id:number){
+          this.socket.emit('leave',this.currentSensId);
+          this.currentSensId=sens_id;
+          this.socket.emit('subscribe',this.currentSensId);
+      }
     
       onSensorData(data){
         this._dataStore.sensorDatas.push(new SensorData(data.sens_id,data.val,data.type,data.received));
         this._dataStore.latestData = new SensorData(data.sens_id,data.val,data.type,data.received);
-        if(this._latestDataObserver){
+        if(this._latestDataObserver)
             this._latestDataObserver.next(this._dataStore.latestData);
-        }
+
+          if(this._sensorDataObserver)
         this._sensorDataObserver.next(this._dataStore.sensorDatas);
       }
 

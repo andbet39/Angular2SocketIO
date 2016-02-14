@@ -7,7 +7,7 @@
         <div>
 
                 <ul>
-                    <li *ngFor ="#sensor of sensors">    <a [routerLink]="['SensorView', {id:sensor.sens_id}]"> {{sensor.sens_id}}</a>
+                    <li *ngFor ="#sensor of sensors">    <a [routerLink]="['SensorView', {id:sensor.id}]"> {{sensor.sens_id}}</a>
                         - {{sensor.name}}</li>
                 </ul>
 

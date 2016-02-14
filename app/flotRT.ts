@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, AfterViewInit,OnChanges} from 'angular2/core';
+import {SimpleChange} from 'angular2/core';
+
 
 @Component({
   selector: 'flotrt',
@@ -8,6 +10,7 @@ import {Component, ElementRef, Input, AfterViewInit,OnChanges} from 'angular2/co
 export class FlotRTCmp  implements AfterViewInit{
 
   public myplot:any;
+
   static chosenInitialized = false;
   private dataset:any =[];
   private _graphData:any;
@@ -16,28 +19,38 @@ export class FlotRTCmp  implements AfterViewInit{
   @Input() private  options: any;
   @Input() private  newdata:number;  
   @Input() private  points:number=100;  
-  @Input() private  min:number=0;
-  @Input() private  max:number=50;
+  @Input() private  min:number;
+  @Input() private  max:number;
   @Input() private  width:string;
   @Input() private  height:string;
       
    
   constructor(public el: ElementRef) {
-      this._graphData = [];
-          this._graphData.push([0,this.min]);
-            for(var i=1;i<this.points-1;i++){
-                 this._graphData.push([i,25]);
-              
-            }
-              this._graphData.push([this.points,this.max]);
-            
-            this.dataset = [{label: "line1",
-                        color:"red",
-                        data:   this._graphData}];
+
+      this.generateRandom();
+
+      FlotRTCmp.chosenInitialized=false;
                              
       
   }
-    
+
+    generateRandom(){
+        console.log("generate Random graph");
+
+        this._graphData = [];
+        this._graphData.push([0,this.min]);
+        for(var i=1;i<this.points-1;i++){
+            this._graphData.push([i,this.max]);
+
+        }
+        this._graphData.push([this.points,this.max]);
+
+        this.dataset = [{label: "line1",
+            color:"red",
+            data:   this._graphData}];
+
+        console.log(this._graphData);
+    }
   
   
   ngAfterViewInit() {
@@ -56,9 +69,11 @@ export class FlotRTCmp  implements AfterViewInit{
       }
   } 
   
- ngOnChanges(changes) {
+ ngOnChanges(changes: {[propName: string]: SimpleChange}) {
       console.log(changes);
-      
+
+
+
        if(FlotRTCmp.chosenInitialized){
              this._graphData.shift();
              this._graphData.push(this.newdata);
@@ -73,10 +88,24 @@ export class FlotRTCmp  implements AfterViewInit{
              this.dataset = [{label: "line1",
                         color:"red",
                         data:   newData}];
-                        
-             this.myplot.setData(this.dataset);
-             this.myplot.draw();
-         }
+
+           if(this.myplot) {
+               this.myplot.setData(this.dataset);
+               this.myplot.draw();
+               this.myplot.setupGrid();
+           }
+
+           if(changes['min'] && changes['max']){
+               console.log("minmax changed");
+
+         //     this.generateRandom();
+               this.myplot.draw();
+               this.myplot.setupGrid();
+
+           }
+       }
+
+
      
   }
 }  

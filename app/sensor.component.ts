@@ -1,16 +1,20 @@
 import {Component} from 'angular2/core';
-import {Component} from 'angular2/core';
 import {SensorDataService} from './sensordata.service';
 import {SensorData} from './models/sensorData';
 import {FlotCmp} from './flot';
 import {FlotRTCmp} from './flotRT';
 import {OnInit} from 'angular2/core';
 import {Control,CORE_DIRECTIVES,FORM_DIRECTIVES} from 'angular2/common'
+import {Router, RouteParams}   from 'angular2/router';
+import {SensorData} from "./models/sensorData";
+import {Sensor} from "./models/sensor";
+import {SensorService} from "./services/sensor.service";
 
 @Component({
     selector: 'my-sensor-view',
     templateUrl:'app/views/sensor-view.html' ,
-    directives: [CORE_DIRECTIVES, FORM_DIRECTIVES,FlotCmp,FlotRTCmp]
+    directives: [CORE_DIRECTIVES, FORM_DIRECTIVES,FlotCmp,FlotRTCmp],
+    providers:[SensorService]
 
 })
 
@@ -20,11 +24,13 @@ export class SensorViewComponent implements OnInit{
   
   private points:number=100;
   private splineOptions:any={};
-  private dataset:any={};
-  public newdata:any=[];
-  public selected_sensor_id:number=121;
+    public newdata:any=[];
+    private currentSensor:Sensor = new Sensor();
   
-   constructor(private _sensorDataService:SensorDataService){
+   constructor(private _sensorDataService:SensorDataService,
+               private _sensorService:SensorService,
+               private _router:Router,
+               private _routeParams:RouteParams){
         
         this.splineOptions = {
             series: {
@@ -35,61 +41,32 @@ export class SensorViewComponent implements OnInit{
                 }
             }
         };
-        
-        
-       this.loadRandomData();
      }
 
-    loadRandomData(){
-        var newData = [];
-         newData.push([0,0]);
-            for(var i=1;i<this.points-1;i++){
-                newData.push([i,25]);
-              
-            }
-             newData.push([this.points,50]);
-            
-            this.dataset = [{label: "line1",
-                        color:"red",
-                        data:  newData}];
-    }
-    
+
   
   ngOnInit(){
-     
+     let sens_id:number = this._routeParams.get('id');
+
+
      this._sensorDataService.latestData$.subscribe(
          data=>
          {
              this.newdata=data.val;
- 
          }
      );
-     
-     
-      this._sensorDataService.sensorDatas$.subscribe(
-        data=>{
-                  
-                let points = this.points;
-                if(data.length >points){
-                    this.sensorData=[];
-                    for(var i=data.length-1; i > data.length-points ;i --){
-                        this.sensorData.push(data[i]);
-                    }
-                }else{
-                    this.sensorData=data;
-                }
-                        
-                var newData = [];
-                this.sensorData.forEach(function(d,i){
-                    newData.push([points-(i+1),d.val]);
-                });
-                
-                this.dataset = [{label: "line1",
-                            color:"red",
-                            data:  newData}];
-                
-                }
-            )
+      this._sensorService.sensor$.subscribe(
+          data => {
+               console.log("SensorCompoent -> Subscribe ");
+              console.log(data);
+              this.currentSensor = data;
+              this._sensorDataService.subscribeSensorData(this.currentSensor.sens_id);
+          }
+      );
+
+      this._sensorService.getSensor(sens_id);
+
+
    }
 
 }

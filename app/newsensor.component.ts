@@ -10,21 +10,20 @@ import {SensorService} from './services/sensor.service'
 
 @Component({
     selector: 'sensor-form',
-    templateUrl:'app/views/sensorform.html'
+    templateUrl:'app/views/sensorform.html',
+    providers:[SensorService]
 })
 
 export class NewSensorComponent {
 
     constructor(private sensorService:SensorService){}
 
-     public model:Sensor=  new Sensor();
+     public model:Sensor = new Sensor();
 
     onSubmit(){
         console.log(this.model);
         this.sensorService.createSensor(this.model);
     }
-
-
 
 
 

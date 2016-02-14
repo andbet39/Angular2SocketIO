@@ -3,12 +3,12 @@
 
         <div class="md-card">
             <div class="md-card-content">
-                <h2>Sensor View</h2>
+                <h2>Sensor View : {{currentSensor.name}}</h2>
                     <div>
 
                     </div>
                 <div>
-                    <flotrt  [options]="splineOptions" [newdata]="newdata" min="0" max="30" height="250px" width="50%"></flotrt>
+                    <flotrt  [options]="splineOptions" [newdata]="newdata" [min]="currentSensor.min_value" [max]="currentSensor.max_value" height="250px" width="50%"></flotrt>
                 </div>
                 NewData  : {{newdata}}
                 <!--  <ul>

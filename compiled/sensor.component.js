@@ -1,4 +1,4 @@
-System.register(['angular2/core', './sensordata.service', './flot', './flotRT', 'angular2/common'], function(exports_1) {
+System.register(['angular2/core', './sensordata.service', './flot', './flotRT', 'angular2/common', 'angular2/router', "./models/sensor", "./services/sensor.service"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', './sensordata.service', './flot', './flotRT', 
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, sensordata_service_1, flot_1, flotRT_1, common_1;
+    var core_1, sensordata_service_1, flot_1, flotRT_1, common_1, router_1, sensor_1, sensor_service_1;
     var SensorViewComponent;
     return {
         setters:[
@@ -26,17 +26,28 @@ System.register(['angular2/core', './sensordata.service', './flot', './flotRT', 
             },
             function (common_1_1) {
                 common_1 = common_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (sensor_1_1) {
+                sensor_1 = sensor_1_1;
+            },
+            function (sensor_service_1_1) {
+                sensor_service_1 = sensor_service_1_1;
             }],
         execute: function() {
             SensorViewComponent = (function () {
-                function SensorViewComponent(_sensorDataService) {
+                function SensorViewComponent(_sensorDataService, _sensorService, _router, _routeParams) {
                     this._sensorDataService = _sensorDataService;
+                    this._sensorService = _sensorService;
+                    this._router = _router;
+                    this._routeParams = _routeParams;
                     this.sensorData = [];
                     this.points = 100;
                     this.splineOptions = {};
-                    this.dataset = {};
                     this.newdata = [];
-                    this.selected_sensor_id = 121;
+                    this.currentSensor = new sensor_1.Sensor();
                     this.splineOptions = {
                         series: {
                             lines: { show: true },
@@ -46,51 +57,29 @@ System.register(['angular2/core', './sensordata.service', './flot', './flotRT', 
                             }
                         }
                     };
-                    this.loadRandomData();
                 }
-                SensorViewComponent.prototype.loadRandomData = function () {
-                    var newData = [];
-                    newData.push([0, 0]);
-                    for (var i = 1; i < this.points - 1; i++) {
-                        newData.push([i, 25]);
-                    }
-                    newData.push([this.points, 50]);
-                    this.dataset = [{ label: "line1",
-                            color: "red",
-                            data: newData }];
-                };
                 SensorViewComponent.prototype.ngOnInit = function () {
                     var _this = this;
+                    var sens_id = this._routeParams.get('id');
                     this._sensorDataService.latestData$.subscribe(function (data) {
                         _this.newdata = data.val;
                     });
-                    this._sensorDataService.sensorDatas$.subscribe(function (data) {
-                        var points = _this.points;
-                        if (data.length > points) {
-                            _this.sensorData = [];
-                            for (var i = data.length - 1; i > data.length - points; i--) {
-                                _this.sensorData.push(data[i]);
-                            }
-                        }
-                        else {
-                            _this.sensorData = data;
-                        }
-                        var newData = [];
-                        _this.sensorData.forEach(function (d, i) {
-                            newData.push([points - (i + 1), d.val]);
-                        });
-                        _this.dataset = [{ label: "line1",
-                                color: "red",
-                                data: newData }];
+                    this._sensorService.sensor$.subscribe(function (data) {
+                        console.log("SensorCompoent -> Subscribe ");
+                        console.log(data);
+                        _this.currentSensor = data;
+                        _this._sensorDataService.subscribeSensorData(_this.currentSensor.sens_id);
                     });
+                    this._sensorService.getSensor(sens_id);
                 };
                 SensorViewComponent = __decorate([
                     core_1.Component({
                         selector: 'my-sensor-view',
                         templateUrl: 'app/views/sensor-view.html',
-                        directives: [common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES, flot_1.FlotCmp, flotRT_1.FlotRTCmp]
+                        directives: [common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES, flot_1.FlotCmp, flotRT_1.FlotRTCmp],
+                        providers: [sensor_service_1.SensorService]
                     }), 
-                    __metadata('design:paramtypes', [sensordata_service_1.SensorDataService])
+                    __metadata('design:paramtypes', [sensordata_service_1.SensorDataService, sensor_service_1.SensorService, router_1.Router, router_1.RouteParams])
                 ], SensorViewComponent);
                 return SensorViewComponent;
             })();

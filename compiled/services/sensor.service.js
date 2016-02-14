@@ -34,7 +34,11 @@ System.register(['angular2/core', '../models/Sensor', 'rxjs/Observable', 'rxjs/a
                     this.sensors$ = new Observable_1.Observable(function (observer) {
                         return _this._sensorsObserver = observer;
                     }).share();
-                    this._dataStore = { sensors: [] };
+                    this.sensor$ = new Observable_1.Observable(function (observer) {
+                        return _this._sensorObserver = observer;
+                    }).share();
+                    this._dataStore = { sensors: [], currentSensor: null };
+                    this._dataStore = { sensors: [], currentSensor: null };
                 }
                 SensorService.prototype.createSensor = function (sensor) {
                     var _this = this;
@@ -44,8 +48,21 @@ System.register(['angular2/core', '../models/Sensor', 'rxjs/Observable', 'rxjs/a
                     this.http.post('http://10.0.0.1:3000/api/sensors', JSON.stringify(sensor), { headers: headers })
                         .subscribe(function (data) {
                         _this._dataStore.sensors.push(sensor);
-                        _this._sensorsObserver.next(_this._dataStore.sensors);
+                        if (_this._sensorsObserver)
+                            _this._sensorsObserver.next(_this._dataStore.sensors);
                     }, function (err) { return console.error(err); });
+                };
+                SensorService.prototype.getSensor = function (id) {
+                    var _this = this;
+                    console.log("SensorService getSensor id:" + id);
+                    this.http.get('http://10.0.0.1:3000/api/sensors/' + id)
+                        .map(function (res) { return res.json(); })
+                        .subscribe(function (data) {
+                        console.log(data);
+                        _this._dataStore.currentSensor = new Sensor_1.Sensor(data.sens_id, data.name, data.description, data.type, data.min_value, data.max_value, data.id);
+                        if (_this._sensorObserver)
+                            _this._sensorObserver.next(_this._dataStore.currentSensor);
+                    }, function (err) { console.log(err); });
                 };
                 SensorService.prototype.loadSensors = function () {
                     var _this = this;
@@ -55,7 +72,7 @@ System.register(['angular2/core', '../models/Sensor', 'rxjs/Observable', 'rxjs/a
                         console.log(data);
                         _this._dataStore.sensors = [];
                         data.forEach(function (sensor) {
-                            _this._dataStore.sensors.push(new Sensor_1.Sensor(sensor.sens_id, sensor.name, sensor.description, sensor.type));
+                            _this._dataStore.sensors.push(new Sensor_1.Sensor(sensor.sens_id, sensor.name, sensor.description, sensor.type, sensor.min_value, sensor.max_value, sensor.id));
                         });
                         _this._sensorsObserver.next(_this._dataStore.sensors);
                     }, function (err) { console.log(err); });
